@@ -1,0 +1,48 @@
+<div class="booking-panel">
+    <h2>📋 Book Rooms</h2>
+
+    <form [formGroup]="bookingForm" class="booking-form">
+        <div class="form-group">
+            <label>Guest ID:</label>
+            <input
+                    formControlName="guestId"
+                    placeholder="Enter guest ID (min 3 chars)"
+                    class="input"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Number of Rooms (1-5):</label>
+            <input
+                    type="number"
+                    formControlName="roomCount"
+                    min="1"
+                    max="5"
+                    class="input"
+            >
+        </div>
+
+        <div class="button-group">
+            <button
+                    type="button"
+                    (click)="onBook()"
+                    [disabled]="loading || bookingForm.invalid"
+                    class="btn btn-primary"
+            >
+                {{ loading ? 'Booking...' : 'Book Rooms' }}
+            </button>
+            <button
+                    type="button"
+                    (click)="onReset()"
+                    [disabled]="loading"
+                    class="btn btn-secondary"
+            >
+                Reset Rooms
+            </button>
+        </div>
+    </form>
+
+    <div [ngClass]="'message ' + messageType" *ngIf="message">
+        {{ message }}
+    </div>
+</div>

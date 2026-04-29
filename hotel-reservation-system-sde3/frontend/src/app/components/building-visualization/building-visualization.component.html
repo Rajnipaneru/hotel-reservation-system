@@ -1,0 +1,29 @@
+<div class="building-visualization">
+    <h2>🏢 Building Layout</h2>
+
+    <div class="floors">
+        <div *ngFor="let floor of [1,2,3,4,5,6,7,8,9,10]" class="floor-section">
+            <h3>Floor {{ floor }}</h3>
+            <div class="rooms-grid">
+                <div
+                        *ngFor="let room of getFloorRooms(floor)"
+                        [ngClass]="getRoomClass(room)"
+                        [title]="'Room ' + room.roomNumber + ' - ' + room.status"
+                >
+                    {{ room.roomNumber }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="room available"></div>
+            <span>Available</span>
+        </div>
+        <div class="legend-item">
+            <div class="room booked"></div>
+            <span>Booked</span>
+        </div>
+    </div>
+</div>

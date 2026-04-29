@@ -24,5 +24,14 @@ services:
     depends_on:
       - mysql
 
+  frontend:
+    image: node:18 as builder
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    command: sh -c "npm install && ng build"
+    ports:
+      - "4200:4200"
+
 volumes:
   mysql_data:

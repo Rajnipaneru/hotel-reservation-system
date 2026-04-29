@@ -6,18 +6,33 @@
     "hotel-reservation-frontend": {
       "projectType": "application",
       "root": "",
-      "sourceRoot": "src",
+      "sourceRoot": "src/app",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/hotel-reservation-frontend",
-            "index": "src/index.html",
-            "main": "src/main.ts"
+            "index": "src/app/index.html",
+            "main": "src/app/main.ts",
+            "tsConfig": "tsconfig.app.json",
+            "assets": [],
+            "styles": [
+              "src/app/app.component.css"
+            ],
+            "scripts": []
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "hotel-reservation-frontend:build"
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
