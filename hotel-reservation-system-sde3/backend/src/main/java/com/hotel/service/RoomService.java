@@ -54,6 +54,14 @@ public class RoomService {
                 .collect(Collectors.toList());
     }
 
+    public List<RoomDTO> getBookedRooms() {
+        return roomRepository.findAllBooked().stream()
+                .map(RoomDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+
+
     public Integer getAvailableCount() {
         return roomRepository.countAvailableRooms();
     }
@@ -72,5 +80,12 @@ public class RoomService {
         List<Room> allRooms = roomRepository.findAll();
         allRooms.forEach(r -> r.setStatus(Room.RoomStatus.AVAILABLE));
         roomRepository.saveAll(allRooms);
+    }
+
+    public void addRooms(List<Room> rooms){
+        for(Room r : rooms){
+            this.roomRepository.save(r);
+        }
+
     }
 }

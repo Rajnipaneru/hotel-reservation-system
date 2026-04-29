@@ -17,4 +17,7 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     @Query("SELECT COUNT(r) FROM Room r WHERE r.status = 'BOOKED'")
     Integer countBookedRooms();
+
+    @Query("SELECT r FROM Room r WHERE r.status = 'BOOKED' ORDER BY r.floor, r.positionNumber")
+    List<Room> findAllBooked();
 }
