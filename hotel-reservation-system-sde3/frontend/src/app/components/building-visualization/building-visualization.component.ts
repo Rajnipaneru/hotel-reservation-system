@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
+import { Room } from '../../models/room.model';
 
 @Component({
   selector: 'app-building-visualization',
@@ -7,7 +8,7 @@ import { ApiService } from '../../services/api.service';
   styleUrls: ['./building-visualization.component.css']
 })
 export class BuildingVisualizationComponent implements OnInit {
-  rooms: any[] = [];
+ rooms: Room[] = [];
 
   constructor(private apiService: ApiService) {}
 
@@ -15,14 +16,16 @@ export class BuildingVisualizationComponent implements OnInit {
     this.loadRooms();
   }
 
-  loadRooms() {
-    this.apiService.getAvailableRooms().subscribe(
-      (data) => {
-        this.rooms = data;
-      },
-      (error) => console.error('Error loading rooms:', error)
-    );
-  }
+  
+
+loadRooms() {
+  this.apiService.getAvailableRooms().subscribe(
+    (data: Room[]) => {
+      this.rooms = data;
+    },
+    (error) => console.error('Error loading rooms:', error)
+  );
+}
 
   getRoomClass(room: any): string {
     return `room ${room.status.toLowerCase()}`;

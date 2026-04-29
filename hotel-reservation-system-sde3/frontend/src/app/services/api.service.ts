@@ -1,37 +1,39 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { BookingResponse } from '../models/booking-response.model';
+import { Observable } from 'rxjs/internal/Observable';
+import { Room } from '../models/room.model';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'http://localhost:8080/api';
 
-  constructor(private http: HttpClient) {
-    // For production
-    if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
-      this.apiUrl = 'https://hotel-reservation-backend.onrender.com/api';
-    }
-  }
+  private apiUrl = environment.apiUrl;
 
-  bookRooms(request: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/reservations/book`, request);
-  }
+  constructor(private http: HttpClient) {}
 
-  getStats(): Observable<any> {
+ bookRooms(request: any): Observable<BookingResponse> {
+  return this.http.post<BookingResponse>(
+    `${this.apiUrl}/reservations/book`,
+    request
+  );
+}
+
+  getStats() {
     return this.http.get(`${this.apiUrl}/rooms/stats`);
   }
 
-  getAvailableRooms(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/rooms/available`);
-  }
-
-  initializeRooms(): Observable<any> {
+  getAvailableRooms(): Observable<Room[]> {
+  return this.http.get<Room[]>(`${this.apiUrl}/rooms/available`);
+}
+  initializeRooms() {
     return this.http.post(`${this.apiUrl}/rooms/init`, {});
   }
 
-  resetRooms(): Observable<any> {
+  resetRooms() {
     return this.http.post(`${this.apiUrl}/rooms/reset`, {});
   }
 }

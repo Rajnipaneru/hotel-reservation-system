@@ -12,6 +12,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "polyfills": ["zone.js"],
             "outputPath": "dist/hotel-reservation-frontend",
             "index": "src/app/index.html",
             "main": "src/app/main.ts",
