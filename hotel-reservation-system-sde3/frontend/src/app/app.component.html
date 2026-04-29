@@ -1,38 +1,42 @@
 <div class="container">
-    <header class="header">
-        <h1>🏨 Hotel Reservation System</h1>
-        <p class="subtitle">SDE 3 Level - Intelligent Room Allocation</p>
-    </header>
+  <header class="header">
+    <h1>🏨 Hotel Reservation System</h1>
+    <p class="subtitle">Intelligent Room Allocation</p>
+  </header>
 
-    <div class="content">
-        <div class="left-panel">
-            <app-booking-panel (bookingSuccess)="loadStats()"></app-booking-panel>
-        </div>
-
-        <div class="right-panel">
-            <app-building-visualization></app-building-visualization>
-
-            <div class="stats" *ngIf="stats">
-                <h3>📊 Statistics</h3>
-                <div class="stat-row">
-                    <span>Total Rooms:</span>
-                    <strong>{{ stats.totalRooms }}</strong>
-                </div>
-                <div class="stat-row">
-                    <span>Available:</span>
-                    <strong class="available">{{ stats.available }}</strong>
-                </div>
-                <div class="stat-row">
-                    <span>Booked:</span>
-                    <strong class="booked">{{ stats.booked }}</strong>
-                </div>
-                <div class="occupancy-bar">
-                    <div
-                            class="occupancy-fill"
-                            [style.width.%]="(stats.booked / stats.totalRooms) * 100"
-                    ></div>
-                </div>
-            </div>
-        </div>
+  <div class="content">
+    <div class="left-panel">
+      <app-booking-panel (bookingSuccess)="onBookingSuccess()"></app-booking-panel>
     </div>
+
+    <div class="right-panel">
+      <app-building-visualization #building></app-building-visualization>
+
+      <div class="stats" *ngIf="stats">
+        <h3>📊 Statistics</h3>
+
+        <div class="stat-row">
+          <span>Total Rooms:</span>
+          <strong>{{ stats.totalRooms }}</strong>
+        </div>
+
+        <div class="stat-row">
+          <span>Available:</span>
+          <strong class="available">{{ stats.available }}</strong>
+        </div>
+
+        <div class="stat-row">
+          <span>Booked:</span>
+          <strong class="booked">{{ stats.booked }}</strong>
+        </div>
+
+        <div class="occupancy-bar">
+          <div
+            class="occupancy-fill"
+            [style.width.%]="stats ? (stats.booked / stats.totalRooms) * 100 : 0"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
