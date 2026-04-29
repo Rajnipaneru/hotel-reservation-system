@@ -3,8 +3,10 @@ package com.hotel.controller;
 import com.hotel.dto.BookingRequestDTO;
 import com.hotel.model.Reservation;
 import com.hotel.service.ReservationService;
+import com.hotel.service.RoomService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +16,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ReservationController {
 
-    private final ReservationService reservationService;
+    @Autowired
+    public ReservationService reservationService;
+
+    @Autowired
+    public RoomService roomService;
 
     @PostMapping("/book")
     public ResponseEntity<Reservation> bookRooms(@Valid @RequestBody BookingRequestDTO request) {
@@ -35,8 +41,5 @@ public class ReservationController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
-    @GetMapping("/hi")
-    public int getid(){
-        return 1;
-    }
+
 }

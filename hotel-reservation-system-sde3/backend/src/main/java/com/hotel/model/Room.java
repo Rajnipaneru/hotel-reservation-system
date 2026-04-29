@@ -18,24 +18,24 @@ public class Room implements Serializable {
     @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
 
     @Setter
     @Column(name = "room_number", nullable = false)
-    private Integer roomNumber;
+    public Integer roomNumber;
 
     @Column(name = "floor", nullable = false)
-    private Integer floor;
+    public Integer floor;
 
     @Column(name = "position_number", nullable = false)
-    private Integer positionNumber;
+    public Integer positionNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private RoomStatus status;
+    public RoomStatus status;
 
     @Column(name = "room_number_index", unique = true)
-    private String roomNumberIndex;
+    public String roomNumberIndex;
 
     public enum RoomStatus {
         AVAILABLE,
@@ -44,5 +44,15 @@ public class Room implements Serializable {
         BOOKED
     }
 
+    public Room(Long id, Integer roomNumber, Integer floor, Integer positionNumber, RoomStatus status, String roomNumberIndex) {
+        this.id = id;
+        this.roomNumber = roomNumber;
+        this.floor = floor;
+        this.positionNumber = positionNumber;
+        this.status = status;
+        this.roomNumberIndex = roomNumberIndex;
+    }
 
+    public Room() {
+    }
 }

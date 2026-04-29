@@ -4,6 +4,7 @@ import com.hotel.dto.RoomDTO;
 import com.hotel.model.Room;
 import com.hotel.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,7 +13,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RoomService {
 
-    private final RoomRepository roomRepository;
+    @Autowired
+    public RoomRepository roomRepository;
 
     public void initializeRooms() {
         if (roomRepository.count() > 0) return;
