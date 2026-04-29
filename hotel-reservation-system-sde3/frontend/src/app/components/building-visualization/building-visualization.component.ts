@@ -8,7 +8,7 @@ import { Room } from '../../models/room.model';
   styleUrls: ['./building-visualization.component.css']
 })
 export class BuildingVisualizationComponent implements OnInit {
- rooms: Room[] = [];
+  rooms: Room[] = [];
 
   constructor(private apiService: ApiService) {}
 
@@ -16,22 +16,26 @@ export class BuildingVisualizationComponent implements OnInit {
     this.loadRooms();
   }
 
-  
+  loadRooms() {
+    
+    this.apiService.getAvailableRooms().subscribe((availableRooms: Room[]) => {
+      this.apiService.getBookedRooms().subscribe((bookedRooms: Room[]) => {
 
-loadRooms() {
-  this.apiService.getAvailableRooms().subscribe(
-    (data: Room[]) => {
-      this.rooms = data;
-    },
-    (error) => console.error('Error loading rooms:', error)
-  );
-}
+       
+        this.rooms = [
+          ...availableRooms.map(r => ({ ...r, status: 'AVAILABLE' })),
+          ...bookedRooms.map(r => ({ ...r, status: 'BOOKED' }))
+        ];
 
-  getRoomClass(room: any): string {
-    return `room ${room.status.toLowerCase()}`;
+      }, (error) => console.error('Error loading booked rooms:', error));
+    }, (error) => console.error('Error loading available rooms:', error));
   }
 
-  getFloorRooms(floor: number): any[] {
+  getRoomClass(room: Room): string {
+    return `room ${room.status.toLowerCase()}`; 
+  }
+
+  getFloorRooms(floor: number): Room[] {
     return this.rooms.filter(r => r.floor === floor);
   }
 }

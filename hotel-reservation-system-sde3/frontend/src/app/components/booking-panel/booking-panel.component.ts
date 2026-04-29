@@ -8,7 +8,7 @@ import { ApiService } from '../../services/api.service';
   styleUrls: ['./booking-panel.component.css']
 })
 export class BookingPanelComponent {
-  @Output() bookingSuccess = new EventEmitter();
+  @Output() bookingSuccess = new EventEmitter<void>();
 
   bookingForm: FormGroup;
   message = '';
@@ -29,16 +29,32 @@ export class BookingPanelComponent {
     }
 
     this.loading = true;
-    this.apiService.bookRooms(this.bookingForm.value).subscribe(
-      (response) => {
-        this.message = `✓ Booking successful! Travel time: ${response.totalTravelTime} min`;
+
+   
+    const request = {
+      guestId: this.bookingForm.value.guestId,   
+      roomCount: Number(this.bookingForm.value.roomCount)
+    };
+
+    this.apiService.bookRooms(request).subscribe(
+      (response: any) => {
+        const travelTime = response?.totalTravelTime ?? 'N/A';
+
+        this.message = `✓ Booking successful! Travel time: ${travelTime} min`;
         this.messageType = 'success';
         this.loading = false;
+
         this.bookingSuccess.emit();
         this.bookingForm.reset({ roomCount: 1 });
       },
       (error) => {
-        this.message = error.error?.message || 'Booking failed';
+        console.error('Booking error:', error);
+
+        this.message =
+          error?.error?.message ||
+          error?.message ||
+          'No suitable rooms available';
+
         this.messageType = 'error';
         this.loading = false;
       }
@@ -47,14 +63,18 @@ export class BookingPanelComponent {
 
   onReset() {
     this.loading = true;
+
     this.apiService.resetRooms().subscribe(
       () => {
         this.message = '✓ Rooms reset!';
         this.messageType = 'info';
         this.loading = false;
+
         this.bookingSuccess.emit();
       },
       (error) => {
+        console.error('Reset error:', error);
+
         this.message = 'Error resetting rooms';
         this.messageType = 'error';
         this.loading = false;
@@ -65,6 +85,9 @@ export class BookingPanelComponent {
   private showMessage(msg: string, type: string) {
     this.message = msg;
     this.messageType = type;
-    setTimeout(() => this.message = '', 5000);
+
+    setTimeout(() => {
+      this.message = '';
+    }, 4000);
   }
 }

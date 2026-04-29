@@ -21,7 +21,9 @@ export class ApiService {
     request
   );
 }
-
+getBookedRooms(): Observable<any> {
+  return this.http.get(`${this.apiUrl}/rooms/booked`);
+}
   getStats() {
     return this.http.get(`${this.apiUrl}/rooms/stats`);
   }
@@ -29,11 +31,20 @@ export class ApiService {
   getAvailableRooms(): Observable<Room[]> {
   return this.http.get<Room[]>(`${this.apiUrl}/rooms/available`);
 }
-  initializeRooms() {
-    return this.http.post(`${this.apiUrl}/rooms/init`, {});
-  }
+  initializeRooms(): Observable<string> {
+  return this.http.post(
+    `${this.apiUrl}/rooms/init`,
+    {},
+    { responseType: 'text' }
+  );
+}
 
-  resetRooms() {
-    return this.http.post(`${this.apiUrl}/rooms/reset`, {});
-  }
+  resetRooms(): Observable<string> {
+  return this.http.post(
+    `${this.apiUrl}/rooms/reset`,
+    {},
+    { responseType: 'text' }
+  );
+}
+
 }
