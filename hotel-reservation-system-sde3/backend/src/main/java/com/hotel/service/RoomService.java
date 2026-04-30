@@ -3,6 +3,7 @@ package com.hotel.service;
 import com.hotel.dto.RoomDTO;
 import com.hotel.model.Room;
 import com.hotel.repository.RoomRepository;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -87,5 +88,20 @@ public class RoomService {
             this.roomRepository.save(r);
         }
 
+    }
+
+    @Transactional
+    public void generateRandomOccupancy() {
+        List<Room> allRooms = roomRepository.findAll();
+        Random random = new Random();
+        allRooms.forEach(room -> {
+            int chance = random.nextInt(100);
+            if (chance < 15) {
+                room.setStatus(Room.RoomStatus.BOOKED);
+            } else {
+                room.setStatus(Room.RoomStatus.AVAILABLE);
+            }
+        });
+        roomRepository.saveAll(allRooms);
     }
 }

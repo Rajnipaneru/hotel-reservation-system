@@ -54,4 +54,11 @@ public class RoomController {
     public ResponseEntity<List<RoomDTO>> getBookedRooms() {
         return ResponseEntity.ok(roomService.getBookedRooms());
     }
+
+    @PostMapping("/random-occupancy")
+    public void generateRandomOccupancy() {
+        roomService.generateRandomOccupancy();
+    }
+
+
 }
