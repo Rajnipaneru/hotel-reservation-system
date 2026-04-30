@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:8080/api'
+  production: true,
+  apiUrl: 'https://hotel-reservation-system-sr8c.onrender.com/api'
 };
