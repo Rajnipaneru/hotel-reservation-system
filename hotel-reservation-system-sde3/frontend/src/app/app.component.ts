@@ -16,8 +16,8 @@ export class AppComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    this.initializeAndLoadStats();
-  }
+  this.loadStats();
+}
 
   initializeAndLoadStats() {
     this.apiService.initializeRooms().subscribe(() => {
