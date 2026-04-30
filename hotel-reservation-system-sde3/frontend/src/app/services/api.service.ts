@@ -38,7 +38,13 @@ getBookedRooms(): Observable<any> {
     { responseType: 'text' }
   );
 }
-
+randomOccupancy(): Observable<string> {
+  return this.http.post(
+    `${this.apiUrl}/rooms/random-occupancy`,
+    {},
+    { responseType: 'text' }
+  );
+}
   resetRooms(): Observable<string> {
   return this.http.post(
     `${this.apiUrl}/rooms/reset`,

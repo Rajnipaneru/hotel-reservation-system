@@ -21,7 +21,25 @@ export class BookingPanelComponent {
       roomCount: [1, [Validators.required, Validators.min(1), Validators.max(5)]]
     });
   }
+onRandomOccupancy() {
+  this.loading = true;
+  this.message = '';
 
+  this.apiService.randomOccupancy().subscribe(
+    () => {
+      this.message = '✓ Random occupancy generated!';
+      this.messageType = 'success';
+      this.loading = false;
+      this.bookingSuccess.emit();
+    },
+    (error) => {
+      console.error('Random occupancy error:', error);
+      this.message = 'Error generating random occupancy';
+      this.messageType = 'error';
+      this.loading = false;
+    }
+  );
+}
   onBook() {
     if (this.bookingForm.invalid) {
       this.showMessage('Please fill form correctly', 'error');

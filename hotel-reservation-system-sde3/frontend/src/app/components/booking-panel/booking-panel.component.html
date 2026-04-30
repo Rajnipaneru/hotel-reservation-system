@@ -39,6 +39,14 @@
             >
                 Reset Rooms
             </button>
+            <button
+  type="button"
+  (click)="onRandomOccupancy()"
+  [disabled]="loading"
+  class="btn btn-secondary"
+>
+  Random Occupancy
+</button>
         </div>
     </form>
 
